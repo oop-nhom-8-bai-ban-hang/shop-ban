@@ -1,0 +1,1 @@
+<img src="assets/ao_thun.jpg" alt="Hình ảnh Áo thun">
