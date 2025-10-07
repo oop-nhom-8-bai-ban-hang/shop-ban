@@ -3,26 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop Bán Ảo</title>
+    
     <style>
-        /* ... CSS cũ ... */
-        .item { margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 10px; display: inline-block; background: white; width: 250px; }
-        /* THÊM: Định dạng cho ảnh */
-        .product-image { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; } 
+        /* CSS CHUNG */
+        body { 
+            font-family: sans-serif; 
+            background: #fafafa; 
+            text-align: center; 
+            margin-top: 50px; 
+        }
+        
+        /* ĐỊNH DẠNG HEADER (LOGO VÀ TÊN SHOP) */
+        .header-container { 
+            display: flex; /* Sắp xếp logo và tên shop cạnh nhau */
+            align-items: center; /* Căn giữa chúng theo chiều dọc */
+            justify-content: center; /* Căn giữa toàn bộ header trên trang */
+            margin-bottom: 40px; 
+        }
+        .shop-logo {
+            width: 50px; /* Kích thước logo */
+            height: 50px; 
+            margin-right: 15px; 
+        }
+        .shop-name {
+            color: #007bff;
+            font-size: 2.5em; 
+            margin: 0; 
+        }
+        
+        /* ĐỊNH DẠNG SẢN PHẨM (KHUNG CỐ ĐỊNH) */
+        .item { 
+            margin: 20px; 
+            padding: 20px; 
+            border: 1px solid #ddd; 
+            border-radius: 10px; 
+            display: inline-block; 
+            background: white; 
+            width: 250px; /* Chiều rộng cố định */
+            height: 420px; /* <--- CHIỀU CAO CỐ ĐỊNH CHO KHUNG SẢN PHẨM */
+            overflow: hidden; /* Quan trọng: Giữ khung cố định dù nội dung có tràn */
+            text-align: center; /* Căn giữa nội dung bên trong khung */
+        }
+        
+        /* ĐỊNH DẠNG ẢNH SẢN PHẨM */
+        .product-image { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 8px; 
+            margin-bottom: 10px; 
+        }
+        
+        h2 a { 
+            text-decoration: none; /* Loại bỏ gạch chân cho tên sản phẩm */
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
+    
+    <div class="header-container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Shop Bán Ảo" class="shop-logo">
+        
+        <h1 class="shop-name">Shop Bán Ảo</h1>
+    </div>
+    
+    <p>Đây là bản demo chạy trên Render + GitHub.</p>
+
     <div class="item">
-        
-        <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Hình ảnh Áo thun" class="product-image"> 
-        
+        <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Hình ảnh Áo thun" class="product-image">
         <h2><a href="/product/ao-thun">Áo thun</a></h2>
         <p>Giá: 99.000đ</p>
     </div>
     
     <div class="item">
-        
         <img src="{{ url_for('static', filename='quan_jean.png') }}" alt="Hình ảnh Quần jean" class="product-image">
-        
         <h2><a href="/product/quan-jean">Quần jean</a></h2>
         <p>Giá: 199.000đ</p>
     </div>
