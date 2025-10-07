@@ -2,8 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Shop Bán Hàng</title>
-    
+    <title>Shop Bán Hàng</title>
     <style>
         /* CSS CHUNG */
         body { 
@@ -12,8 +11,47 @@
             text-align: center; 
             margin-top: 50px; 
         }
-        
-        /* ĐỊNH DẠNG HEADER (LOGO VÀ TÊN SHOP) */
+
+        /* MÀN HÌNH CHÀO */
+        #welcome-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #007bff, #00c3ff);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        #welcome-screen img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.6);
+        }
+        #welcome-screen h1 {
+            margin: 10px 0;
+            font-size: 2em;
+        }
+        #welcome-screen button {
+            background: white;
+            color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        #welcome-screen button:hover {
+            background: #e6e6e6;
+            transform: scale(1.05);
+        }
+
+        /* HEADER SHOP */
         .header-container { 
             display: flex;
             align-items: center;
@@ -30,11 +68,10 @@
             font-size: 2.5em; 
             margin: 0; 
         }
-        
-        /* ĐỊNH DẠNG SẢN PHẨM (KHUNG CHUNG) */
+
+        /* KHỐI SẢN PHẨM */
         .item { 
             margin: 20px; 
-            padding: 0;
             border: 1px solid #ddd; 
             border-radius: 10px; 
             display: inline-block; 
@@ -49,8 +86,6 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
-
-        /* KHỐI HÌNH ẢNH (Ô TRÊN - CHIỀU CAO CỐ ĐỊNH) */
         .image-box {
             width: 100%;
             height: 250px;
@@ -61,20 +96,14 @@
             background-color: #eee;
             border-bottom: 1px solid #eee;
         }
-
-        /* ĐỊNH DẠNG ẢNH SẢN PHẨM */
         .product-image { 
             width: 100%;
             height: 100%;
             object-fit: cover; 
         }
-        
-        /* KHỐI CHI TIẾT (Ô DƯỚI - CHIỀU CAO TỰ ĐỘNG) */
         .detail-box {
             padding: 10px 15px;
         }
-
-        /* TÊN VÀ GIÁ TRÊN CÙNG MỘT HÀNG */
         .info-row {
             display: flex;
             justify-content: space-between; 
@@ -91,29 +120,24 @@
             font-weight: bold;
             font-size: 1.1em;
         }
-
         h2 a { 
             text-decoration: none;
             color: #007bff;
         }
 
-        /* KHỐI NÚT NHẠC VÀ ÂM THANH */
+        /* NÚT NHẠC */
         .audio-controls {
             position: fixed;
             bottom: 10px;
             left: 10px;
             z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-
         #music-toggle {
             background: #007bff;
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 5px 10px;
+            padding: 6px 10px;
             cursor: pointer;
             transition: background 0.3s;
         }
@@ -123,38 +147,33 @@
     </style>
 </head>
 <body>
-    
-    <div class="audio-controls">
-        <audio id="background-music" autoplay loop>
+
+    <!-- MÀN HÌNH CHÀO MỪNG -->
+    <div id="welcome-screen">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        <h1>Xin chào Quý khách!</h1>
+        <p>Chào mừng bạn đến với <b>Shop Bán Hàng</b></p>
+        <button id="enter-btn">Xác nhận để tiếp tục</button>
+    </div>
+
+    <!-- Âm nhạc nền và nút bật/tắt -->
+    <div class="audio-controls" style="display:none;">
+        <audio id="background-music" loop>
             <source src="{{ url_for('static', filename='background_music.mp3') }}" type="audio/mpeg">
-            Trình duyệt của bạn không hỗ trợ thẻ audio.
+            Trình duyệt của bạn không hỗ trợ audio.
         </audio>
         <button id="music-toggle">Tắt nhạc</button>
     </div>
 
-    <script>
-        const music = document.getElementById('background-music');
-        const toggleButton = document.getElementById('music-toggle');
-
-        toggleButton.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-                toggleButton.textContent = 'Tắt nhạc';
-            } else {
-                music.pause();
-                toggleButton.textContent = 'Bật nhạc';
-            }
-        });
-    </script>
-    
+    <!-- Phần nội dung chính -->
     <div class="header-container">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Shop Bán Ảo" class="shop-logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Shop" class="shop-logo">
         <h1 class="shop-name">Shop Bán Ảo</h1>
     </div>
-    
+
     <div class="item">
         <div class="image-box">
-            <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Hình ảnh Áo thun" class="product-image">
+            <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Hình Áo thun" class="product-image">
         </div>
         <div class="detail-box">
             <div class="info-row">
@@ -163,10 +182,10 @@
             </div>
         </div>
     </div>
-    
+
     <div class="item">
         <div class="image-box">
-            <img src="{{ url_for('static', filename='quan_jean.png') }}" alt="Hình ảnh Quần jean" class="product-image">
+            <img src="{{ url_for('static', filename='quan_jean.png') }}" alt="Hình Quần jean" class="product-image">
         </div>
         <div class="detail-box">
             <div class="info-row">
@@ -175,5 +194,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const enterBtn = document.getElementById('enter-btn');
+        const music = document.getElementById('background-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const audioControls = document.querySelector('.audio-controls');
+        let playing = false;
+
+        enterBtn.onclick = () => {
+            welcomeScreen.style.display = 'none';
+            audioControls.style.display = 'block';
+            music.play();
+            playing = true;
+        };
+
+        musicToggle.onclick = () => {
+            if (playing) {
+                music.pause();
+                musicToggle.textContent = "Bật nhạc";
+            } else {
+                music.play();
+                musicToggle.textContent = "Tắt nhạc";
+            }
+            playing = !playing;
+        };
+    </script>
 </body>
 </html>
