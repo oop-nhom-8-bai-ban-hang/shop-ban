@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Shop Bán Ảo</title>
+    <title>Shop Bán Hàng</title>
     
     <style>
         /* CSS CHUNG */
@@ -97,24 +97,55 @@
             color: #007bff;
         }
 
-        /* ĐỊNH DẠNG NÚT ĐIỀU KHIỂN NHẠC */
+        /* KHỐI NÚT NHẠC VÀ ÂM THANH */
         .audio-controls {
-            position: fixed; /* Giữ cố định trên màn hình */
-            bottom: 10px; /* Cách đáy 10px */
-            left: 10px; /* Cách lề trái 10px */
-            z-index: 1000; /* Đảm bảo nó nằm trên cùng */
-            opacity: 0.8; /* Hơi mờ đi để không quá nổi bật */
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #music-toggle {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        #music-toggle:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
     
     <div class="audio-controls">
-        <audio controls loop autoplay>
-          <source src="{{ url_for('static', filename='background_music.mp3') }}" type="audio/mpeg">
-          Trình duyệt của bạn không hỗ trợ thẻ audio.
+        <audio id="background-music" autoplay loop>
+            <source src="{{ url_for('static', filename='background_music.mp3') }}" type="audio/mpeg">
+            Trình duyệt của bạn không hỗ trợ thẻ audio.
         </audio>
+        <button id="music-toggle">Tắt nhạc</button>
     </div>
+
+    <script>
+        const music = document.getElementById('background-music');
+        const toggleButton = document.getElementById('music-toggle');
+
+        toggleButton.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                toggleButton.textContent = 'Tắt nhạc';
+            } else {
+                music.pause();
+                toggleButton.textContent = 'Bật nhạc';
+            }
+        });
+    </script>
     
     <div class="header-container">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Shop Bán Ảo" class="shop-logo">
@@ -125,7 +156,6 @@
         <div class="image-box">
             <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Hình ảnh Áo thun" class="product-image">
         </div>
-        
         <div class="detail-box">
             <div class="info-row">
                 <h2><a href="/product/ao-thun">Áo thun</a></h2>
@@ -138,7 +168,6 @@
         <div class="image-box">
             <img src="{{ url_for('static', filename='quan_jean.png') }}" alt="Hình ảnh Quần jean" class="product-image">
         </div>
-
         <div class="detail-box">
             <div class="info-row">
                 <h2><a href="/product/quan-jean">Quần jean</a></h2>
