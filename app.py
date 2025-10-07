@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    # Lệnh này yêu cầu Flask tải file index.html từ thư mục 'templates'
     return render_template("index.html")
 
 @app.route("/product/<name>")
