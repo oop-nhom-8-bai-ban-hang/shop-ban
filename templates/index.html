@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Shop Bán Ảo</title>
-  <style>
-    body { font-family: sans-serif; background: #fafafa; text-align: center; margin-top: 50px; }
-    h1 { color: #007bff; }
-    .item { margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 10px; display: inline-block; background: white; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Shop Bán Ảo</title>
+    <style>
+        /* ... CSS cũ ... */
+        .item { margin: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 10px; display: inline-block; background: white; width: 250px; }
+        /* THÊM: Định dạng cho ảnh */
+        .product-image { max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; } 
+    </style>
 </head>
 <body>
-  <h1>🛒 Shop Bán Ảo</h1>
-  <p>Đây là bản demo chạy trên Render + GitHub.</p>
-  <div class="item">
-    <h2><a href="/product/ao-thun">Áo thun</a></h2>
-    <p>Giá: 99.000đ</p>
-  </div>
-  <div class="item">
-    <h2><a href="/product/quan-jean">Quần jean</a></h2>
-    <p>Giá: 199.000đ</p>
-  </div>
+    <div class="item">
+        
+        <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Hình ảnh Áo thun" class="product-image"> 
+        
+        <h2><a href="/product/ao-thun">Áo thun</a></h2>
+        <p>Giá: 99.000đ</p>
+    </div>
+    
+    <div class="item">
+        
+        <img src="{{ url_for('static', filename='quan_jean.jpg') }}" alt="Hình ảnh Quần jean" class="product-image">
+        
+        <h2><a href="/product/quan-jean">Quần jean</a></h2>
+        <p>Giá: 199.000đ</p>
+    </div>
 </body>
 </html>
