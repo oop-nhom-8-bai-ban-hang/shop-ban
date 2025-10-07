@@ -5,7 +5,7 @@
     <title>Shop Bán Ảo</title>
     
     <style>
-        /* ... CSS CHUNG ... */
+        /* CSS CHUNG */
         body { 
             font-family: sans-serif; 
             background: #fafafa; 
@@ -13,7 +13,7 @@
             margin-top: 50px; 
         }
         
-        /* ... ĐỊNH DẠNG HEADER (LOGO VÀ TÊN SHOP) ... */
+        /* ĐỊNH DẠNG HEADER (LOGO VÀ TÊN SHOP) */
         .header-container { 
             display: flex;
             align-items: center;
@@ -40,15 +40,11 @@
             display: inline-block; 
             background: white; 
             width: 250px; 
-            /* ĐÃ CHỈNH SỬA: BỎ CHIỀU CAO CỐ ĐỊNH CỦA .item */
-            /* height: auto;  */ /* .item sẽ tự co giãn theo nội dung */
             overflow: hidden; 
             text-align: left;
-            /* Thêm box-shadow nhẹ để trông đẹp hơn */
             box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-            transition: transform 0.2s ease-in-out; /* Hiệu ứng di chuột */
+            transition: transform 0.2s ease-in-out;
         }
-        /* Hiệu ứng khi di chuột qua sản phẩm */
         .item:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
@@ -57,13 +53,13 @@
         /* KHỐI HÌNH ẢNH (Ô TRÊN - CHIỀU CAO CỐ ĐỊNH) */
         .image-box {
             width: 100%;
-            height: 250px; /* Vẫn giữ chiều cao cố định cho khung ảnh */
+            height: 250px;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #eee; /* Màu nền nếu ảnh bị crop hoặc có khoảng trống */
-            border-bottom: 1px solid #eee; /* Đường viền nhẹ chia ảnh và chi tiết */
+            background-color: #eee;
+            border-bottom: 1px solid #eee;
         }
 
         /* ĐỊNH DẠNG ẢNH SẢN PHẨM */
@@ -75,8 +71,7 @@
         
         /* KHỐI CHI TIẾT (Ô DƯỚI - CHIỀU CAO TỰ ĐỘNG) */
         .detail-box {
-            padding: 10px 15px; /* Thêm padding cho nội dung chi tiết */
-            /* ĐÃ CHỈNH SỬA: detail-box sẽ tự động co giãn theo nội dung */
+            padding: 10px 15px;
         }
 
         /* TÊN VÀ GIÁ TRÊN CÙNG MỘT HÀNG */
@@ -84,26 +79,42 @@
             display: flex;
             justify-content: space-between; 
             align-items: center;
-            margin-bottom: 5px; /* Khoảng cách dưới dòng tên/giá */
+            margin-bottom: 5px;
         }
         .info-row h2 {
             margin: 0; 
-            font-size: 1.1em; /* Tăng nhẹ kích thước tên sản phẩm */
+            font-size: 1.1em;
         }
         .product-price {
             margin: 0;
             color: #555;
             font-weight: bold;
-            font-size: 1.1em; /* Đồng bộ kích thước với tên sản phẩm */
+            font-size: 1.1em;
         }
 
         h2 a { 
             text-decoration: none;
             color: #007bff;
         }
+
+        /* ĐỊNH DẠNG NÚT ĐIỀU KHIỂN NHẠC */
+        .audio-controls {
+            position: fixed; /* Giữ cố định trên màn hình */
+            bottom: 10px; /* Cách đáy 10px */
+            left: 10px; /* Cách lề trái 10px */
+            z-index: 1000; /* Đảm bảo nó nằm trên cùng */
+            opacity: 0.8; /* Hơi mờ đi để không quá nổi bật */
+        }
     </style>
 </head>
 <body>
+    
+    <div class="audio-controls">
+        <audio controls loop autoplay>
+          <source src="{{ url_for('static', filename='background_music.mp3') }}" type="audio/mpeg">
+          Trình duyệt của bạn không hỗ trợ thẻ audio.
+        </audio>
+    </div>
     
     <div class="header-container">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Shop Bán Ảo" class="shop-logo">
@@ -120,7 +131,7 @@
                 <h2><a href="/product/ao-thun">Áo thun</a></h2>
                 <p class="product-price">99.000đ</p>
             </div>
-            </div>
+        </div>
     </div>
     
     <div class="item">
@@ -133,7 +144,7 @@
                 <h2><a href="/product/quan-jean">Quần jean</a></h2>
                 <p class="product-price">199.000đ</p>
             </div>
-            </div>
+        </div>
     </div>
 </body>
 </html>
