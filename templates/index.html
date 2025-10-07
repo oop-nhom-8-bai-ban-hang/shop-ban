@@ -15,13 +15,13 @@
         
         /* ĐỊNH DẠNG HEADER (LOGO VÀ TÊN SHOP) */
         .header-container { 
-            display: flex; /* Sắp xếp logo và tên shop cạnh nhau */
-            align-items: center; /* Căn giữa chúng theo chiều dọc */
-            justify-content: center; /* Căn giữa toàn bộ header trên trang */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 40px; 
         }
         .shop-logo {
-            width: 50px; /* Kích thước logo */
+            width: 50px;
             height: 50px; 
             margin-right: 15px; 
         }
@@ -34,28 +34,58 @@
         /* ĐỊNH DẠNG SẢN PHẨM (KHUNG CỐ ĐỊNH) */
         .item { 
             margin: 20px; 
-            padding: 20px; 
+            padding: 0; /* ĐÃ CHỈNH SỬA: Bỏ padding để kiểm soát bố cục dễ hơn */
             border: 1px solid #ddd; 
             border-radius: 10px; 
             display: inline-block; 
             background: white; 
-            width: 250px; /* Chiều rộng cố định */
-            height: 420px; /* <--- CHIỀU CAO CỐ ĐỊNH CHO KHUNG SẢN PHẨM */
-            overflow: hidden; /* Quan trọng: Giữ khung cố định dù nội dung có tràn */
-            text-align: center; /* Căn giữa nội dung bên trong khung */
+            width: 250px; 
+            height: 420px; 
+            overflow: hidden; 
+            text-align: left; /* CHỈNH SỬA: Căn lề trái cho nội dung bên trong */
         }
         
+        /* 1. KHỐI HÌNH ẢNH (Ô TRÊN) */
+        .image-box {
+            width: 100%;
+            height: 250px; /* Chiều cao cố định cho khung ảnh (Ô trên) */
+            overflow: hidden;
+            display: flex; /* Dùng flex để căn giữa ảnh nếu cần */
+            justify-content: center;
+            align-items: center;
+        }
+
         /* ĐỊNH DẠNG ẢNH SẢN PHẨM */
         .product-image { 
-            max-width: 100%; 
-            height: auto; 
-            border-radius: 8px; 
-            margin-bottom: 10px; 
+            width: 100%; /* Lấp đầy chiều rộng của .image-box */
+            height: 100%; /* Lấp đầy chiều cao của .image-box */
+            object-fit: cover; /* Quan trọng: Cắt ảnh để vừa khung, tránh bị méo */
         }
         
+        /* 2. KHỐI CHI TIẾT (Ô DƯỚI) */
+        .detail-box {
+            padding: 10px 15px; /* Thêm padding cho nội dung chi tiết */
+        }
+
+        /* TÊN VÀ GIÁ TRÊN CÙNG MỘT HÀNG */
+        .info-row {
+            display: flex;
+            justify-content: space-between; /* Đẩy tên và giá về hai phía */
+            align-items: center;
+        }
+        .info-row h2, .product-price {
+            margin: 0; /* Loại bỏ margin thừa */
+            font-size: 1em; 
+        }
+        .product-price {
+            color: #555;
+            font-weight: bold;
+        }
+
         h2 a { 
-            text-decoration: none; /* Loại bỏ gạch chân cho tên sản phẩm */
+            text-decoration: none;
             color: #007bff;
+            font-size: 1.2em; /* Tăng nhẹ kích thước tên sản phẩm */
         }
     </style>
 </head>
@@ -63,22 +93,33 @@
     
     <div class="header-container">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Shop Bán Ảo" class="shop-logo">
-        
         <h1 class="shop-name">Shop Bán Ảo</h1>
     </div>
     
-    <p>Đây là bản demo chạy trên Render + GitHub.</p>
-
     <div class="item">
-        <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Hình ảnh Áo thun" class="product-image">
-        <h2><a href="/product/ao-thun">Áo thun</a></h2>
-        <p>Giá: 99.000đ</p>
+        <div class="image-box">
+            <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Hình ảnh Áo thun" class="product-image">
+        </div>
+        
+        <div class="detail-box">
+            <div class="info-row">
+                <h2><a href="/product/ao-thun">Áo thun</a></h2>
+                <p class="product-price">99.000đ</p>
+            </div>
+        </div>
     </div>
     
     <div class="item">
-        <img src="{{ url_for('static', filename='quan_jean.png') }}" alt="Hình ảnh Quần jean" class="product-image">
-        <h2><a href="/product/quan-jean">Quần jean</a></h2>
-        <p>Giá: 199.000đ</p>
+        <div class="image-box">
+            <img src="{{ url_for('static', filename='quan_jean.png') }}" alt="Hình ảnh Quần jean" class="product-image">
+        </div>
+
+        <div class="detail-box">
+            <div class="info-row">
+                <h2><a href="/product/quan-jean">Quần jean</a></h2>
+                <p class="product-price">199.000đ</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
