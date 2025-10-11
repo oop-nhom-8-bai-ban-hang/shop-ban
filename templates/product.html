@@ -2,51 +2,42 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>{{ name | title }}</title>
+    <title>{{ product.name }}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fafafa;
-            text-align: center;
-            padding: 40px;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            display: inline-block;
-        }
-        img {
-            width: 250px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        /* Style cho video */
+        video { width: 100%; max-width: 600px; border-radius: 8px; margin-bottom: 20px; }
+        /* Style cho bộ sưu tập ảnh */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 20px; }
+        .gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; transition: transform 0.2s; }
+        .gallery img:hover { transform: scale(1.05); }
+        a { text-decoration: none; color: #007bff; }
     </style>
 </head>
 <body>
     <div class="container">
-        {% if name == 'ao-thun' %}
-            <h1>Áo Thun Nam Cotton</h1>
-            <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Áo thun">
-            <p>Chất liệu cotton 100%, thoáng mát, dễ phối đồ.</p>
-            <p><b>Giá: 99.000đ</b></p>
-        {% elif name == 'quan-jean' %}
-            <h1>Quần Jean Nữ Co Giãn</h1>
-            <img src="{{ url_for('static', filename='quan_jean.png') }}" alt="Quần jean">
-            <p>Chất liệu denim co giãn cao cấp, phong cách năng động.</p>
-            <p><b>Giá: 199.000đ</b></p>
-        {% else %}
-            <h1>Thông tin sản phẩm: {{ name }}</h1>
-            <p>Đây chỉ là mô phỏng!</p>
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <p><b>Giá: {{ product.price }}</b></p>
+        
+        {% if product.video_file %}
+            <video controls>
+                <source src="{{ url_for('static', filename=product.video_file) }}" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ video.
+            </video>
         {% endif %}
+
+        <hr>
+        <h2>Bộ sưu tập hình ảnh</h2>
+        <div class="gallery">
+            <img src="{{ url_for('static', filename=product.cover_image) }}" alt="{{ product.name }}">
+            {% for image_path in product.detail_images %}
+                <img src="{{ url_for('static', filename=image_path) }}" alt="{{ product.name }}">
+            {% endfor %}
+        </div>
+        
         <br>
         <a href="/">← Quay lại trang chính</a>
     </div>
