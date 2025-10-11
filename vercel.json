@@ -1,14 +1,14 @@
 {
   "builds": [
     {
-      "src": "pom.xml",
-      "use": "vercel-community/java-gradle"
+      "src": "app.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "app.py"
     }
   ]
 }
