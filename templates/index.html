@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
         }
 
-        /* --- CSS CHO MÀN HÌNH CHÀO MỪNG (KÍCH THƯỚC ĐÃ ĐIỀU CHỈNH) --- */
+        /* --- CSS CHO MÀN HÌNH CHÀO MỪNG (ĐÃ THU NHỎ ẢNH) --- */
         #welcome-overlay {
             position: fixed;
             top: 0;
@@ -37,21 +37,21 @@
         }
 
         #welcome-overlay img {
-            width: 150px; /* Nhỏ hơn một chút */
-            height: 150px; /* Nhỏ hơn một chút */
+            width: 120px; /* <-- ĐÃ CHỈNH LẠI CỠ NHỎ HƠN */
+            height: 120px; /* <-- ĐÃ CHỈNH LẠI CỠ NHỎ HƠN */
             border-radius: 50%;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            margin-bottom: 25px; /* Giảm khoảng cách cho cân đối */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             object-fit: cover;
         }
 
         #welcome-overlay h1 {
-            font-size: 3.2em; /* Nhỏ hơn một chút */
+            font-size: 3.2em; 
             margin: 0 0 15px 0;
         }
 
         #welcome-overlay p {
-            font-size: 1.5em; /* Nhỏ hơn một chút */
+            font-size: 1.5em;
             margin: 0 0 40px 0;
             opacity: 0.9;
         }
@@ -61,8 +61,8 @@
             color: #007bff;
             border: none;
             border-radius: 50px;
-            padding: 14px 40px; /* Nhỏ hơn một chút */
-            font-size: 1.4em; /* Nhỏ hơn một chút */
+            padding: 14px 40px;
+            font-size: 1.4em;
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
@@ -80,7 +80,7 @@
             text-align: center;
         }
 
-        /* === CSS MỚI CHO NÚT BẬT/TẮT NHẠC === */
+        /* --- CSS CHO NÚT BẬT/TẮT NHẠC --- */
         #music-toggle-button {
             position: fixed;
             bottom: 20px;
@@ -128,14 +128,10 @@
         const enterButton = document.getElementById('enter-button');
         const mainContent = document.getElementById('main-content');
         const backgroundMusic = document.getElementById('background-music');
-        
-        // === JAVASCRIPT MỚI: LẤY THÊM NÚT NHẠC ===
         const musicToggleButton = document.getElementById('music-toggle-button');
 
-        // Biến để theo dõi trạng thái nhạc
         let isMusicPlaying = false;
 
-        // Sự kiện khi bấm nút "Xác nhận để tiếp tục"
         enterButton.addEventListener('click', () => {
             backgroundMusic.play().then(() => {
                 isMusicPlaying = true;
@@ -147,12 +143,9 @@
 
             welcomeOverlay.classList.add('hidden');
             mainContent.style.display = 'block';
-
-            // === JAVASCRIPT MỚI: HIỆN NÚT BẬT/TẮT NHẠC ===
             musicToggleButton.style.display = 'block';
         });
 
-        // === JAVASCRIPT MỚI: SỰ KIỆN KHI BẤM NÚT BẬT/TẮT NHẠC ===
         musicToggleButton.addEventListener('click', () => {
             if (isMusicPlaying) {
                 backgroundMusic.pause();
