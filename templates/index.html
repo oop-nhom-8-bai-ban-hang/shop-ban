@@ -12,53 +12,46 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f4f4f9;
         }
-
-        /* --- CSS CHO MÀN HÌNH CHÀO MỪNG --- */
+/* --- CSS CHO MÀN HÌNH CHÀO MỪNG (Đã TĂNG CỠ GẤP ĐÔI) --- */
         #welcome-overlay {
-            /* Kích thước và vị trí */
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 1000; /* Luôn nằm trên cùng */
-
-            /* Màu sắc và nền */
-            background: linear-gradient(135deg, #007bff, #00c3ff); /* Gradient màu xanh giống ảnh */
+            z-index: 1000;
+            background: linear-gradient(135deg, #007bff, #00c3ff);
             color: white;
-
-            /* Căn giữa nội dung */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            
-            /* Hiệu ứng mờ dần khi ẩn đi */
             transition: opacity 0.5s ease-out;
         }
 
         #welcome-overlay.hidden {
             opacity: 0;
-            pointer-events: none; /* Không cho phép click vào màn hình chào khi đã ẩn */
+            pointer-events: none;
         }
 
         #welcome-overlay img {
-            width: 120px;
-            height: 120px;
+            width: 240px; /* Tăng từ 120px lên 240px */
+            height: 240px; /* Tăng từ 120px lên 240px */
             border-radius: 50%;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 50px; /* Tăng từ 25px lên 50px */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Tăng đổ bóng */
             object-fit: cover;
         }
 
         #welcome-overlay h1 {
-            font-size: 2.5em;
+            font-size: 5em; /* Tăng từ 2.5em lên 5em */
             margin: 0;
+            margin-bottom: 20px; /* Thêm khoảng cách dưới h1 */
         }
 
         #welcome-overlay p {
-            font-size: 1.2em;
-            margin: 10px 0 30px 0;
+            font-size: 2.4em; /* Tăng từ 1.2em lên 2.4em */
+            margin: 10px 0 60px 0; /* Tăng khoảng cách dưới p */
             opacity: 0.9;
         }
 
@@ -66,16 +59,16 @@
             background-color: white;
             color: #007bff;
             border: none;
-            border-radius: 50px; /* Bo tròn */
-            padding: 12px 30px;
-            font-size: 1.1em;
+            border-radius: 50px;
+            padding: 20px 60px; /* Tăng padding */
+            font-size: 2.2em; /* Tăng từ 1.1em lên 2.2em */
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
         }
 
         #welcome-overlay button:hover {
-            transform: scale(1.05); /* Hiệu ứng phóng to khi di chuột */
+            transform: scale(1.05);
             background-color: #f0f0f0;
         }
 
