@@ -1,13 +1,55 @@
-{% for product_id, product_data in products.items() %}
-<div class="item" aria-hidden="true">
-    <div class="image-box">
-        <img src="{{ url_for('static', filename=product_data.cover_image) }}" alt="Hình {{ product_data.name }}" class="product-image">
-    </div>
-    <div class="detail-box">
-        <div class="info-row">
-            <h2><a href="{{ url_for('product', product_id=product_id) }}">{{ product_data.name }}</a></h2>
-            <p class="product-price">{{ product_data.price }}</p>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop Bán Hàng</title>
+    <style>
+        /* ... CSS chung của bạn ... */
+        .category-section {
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 2px solid #eee;
+        }
+        .category-title {
+            font-size: 2.2em;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome-screen"> ... </div>
+    <div class="header-container"> ... </div>
+    
+    {% for category_name, products_in_category in categories.items() %}
+    <div class="category-section">
+        <h2 class="category-title">{{ category_name }}</h2>
+        <div class="product-container">
+            {% for product in products_in_category %}
+            <div class="item">
+                <div class="image-box">
+                    <img src="{{ url_for('static', filename=product.cover_image) }}" alt="Hình {{ product.name }}" class="product-image">
+                </div>
+                <div class="detail-box">
+                    <div class="info-row">
+                        <h2><a href="{{ url_for('product', product_id=product.id) }}">{{ product.name }}</a></h2>
+                        <p class="product-price">{{ product.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
+
+    <audio id="background-music"> ... </audio>
+    <script> ... </script>
+</body>
+</html>
