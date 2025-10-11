@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name | title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            text-align: center;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+        img {
+            width: 250px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if name == 'ao-thun' %}
+            <h1>Áo Thun Nam Cotton</h1>
+            <img src="{{ url_for('static', filename='ao_thun.jpg') }}" alt="Áo thun">
+            <p>Chất liệu cotton 100%, thoáng mát, dễ phối đồ.</p>
+            <p><b>Giá: 99.000đ</b></p>
+        {% elif name == 'quan-jean' %}
+            <h1>Quần Jean Nữ Co Giãn</h1>
+            <img src="{{ url_for('static', filename='quan_jean.png') }}" alt="Quần jean">
+            <p>Chất liệu denim co giãn cao cấp, phong cách năng động.</p>
+            <p><b>Giá: 199.000đ</b></p>
+        {% else %}
+            <h1>Thông tin sản phẩm: {{ name }}</h1>
+            <p>Đây chỉ là mô phỏng!</p>
+        {% endif %}
+        <br>
+        <a href="/">← Quay lại trang chính</a>
+    </div>
+</body>
+</html>
