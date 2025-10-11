@@ -9,6 +9,7 @@ app = Flask(__name__)
 # ==============================================================================
 # Thêm các cặp "tên-thư-mục": "Tên Hiển Thị" mà bạn muốn.
 # Code sẽ chỉ quét những thư mục có tên được liệt kê ở đây.
+
 CATEGORY_NAME_MAP = {
     'shoes': 'Giày Dép Thời Trang',
     'linh-tinh': 'Sản Phẩm Linh Tinh',
