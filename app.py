@@ -4,93 +4,90 @@ import json
 
 app = Flask(__name__)
 
-def load_categorized_products():
+# ==============================================================================
+# BẢNG QUY ĐỔI TÊN KHU VỰC - BẠN SẼ CHỈNH SỬA Ở ĐÂY
+# ==============================================================================
+# Thêm các cặp "tên-thư-mục": "Tên Hiển Thị" mà bạn muốn.
+# Code sẽ chỉ quét những thư mục có tên được liệt kê ở đây.
+CATEGORY_NAME_MAP = {
+    'shoes': 'Giày Dép Thời Trang',
+    'linh-tinh': 'Sản Phẩm Linh Tinh',
+    # Ví dụ, khi bạn sẵn sàng, hãy thêm dòng sau:
+    # 'phu-kien': 'Phụ Kiện Da Cao Cấp'
+}
+
+def load_products_from_folders():
     """
-    Quét thư mục static, tự động phân loại sản phẩm vào các khu vực
-    dựa trên thư mục con.
+    Quét các thư mục con trong 'static' được định nghĩa trong CATEGORY_NAME_MAP.
+    Mỗi thư mục con là một khu vực, và mỗi thư mục con bên trong nó là một sản phẩm.
     """
-    # Cấu trúc dữ liệu mới: {'Tên Khu Vực': [danh sách sản phẩm]}
     categorized_products = {}
     base_path = 'static'
-    files_to_ignore = ['logo', 'do_ngu', 'background_music']
-    image_extensions = ('.png', '.jpg', '.jpeg', '.webp')
 
-    # --- XỬ LÝ CÁC KHU VỰC TỪ THƯ MỤC CON ---
-    for category_folder in os.listdir(base_path):
-        category_path = os.path.join(base_path, category_folder)
-        
-        # Chỉ xử lý nếu là thư mục và không phải thư mục hệ thống
-        if os.path.isdir(category_path) and not category_folder.startswith('__'):
-            category_name = category_folder.replace('-', ' ').replace('_', ' ').title()
-            product_list = []
+    # Lặp qua các thư mục được định nghĩa trong "bản đồ"
+    for folder_name, display_name in CATEGORY_NAME_MAP.items():
+        folder_path = os.path.join(base_path, folder_name)
+        product_list = []
 
-            # (Logic quét sản phẩm bên trong thư mục category, tương tự như trước)
-            # Bạn có thể kết hợp cả 2 kiểu: sản phẩm là thư mục con hoặc file lẻ
-            # Ví dụ đơn giản: quét các file lẻ trong thư mục category
-            for filename in os.listdir(category_path):
-                if filename.lower().endswith(image_extensions):
-                    product_id = f"{category_folder}-{os.path.splitext(filename)[0]}" # Tạo ID duy nhất
-                    product_name = os.path.splitext(filename)[0].replace('_', ' ').title()
+        # Kiểm tra xem thư mục khu vực có tồn tại không
+        if os.path.isdir(folder_path):
+            # Lặp qua các thư mục sản phẩm bên trong
+            for product_folder in os.listdir(folder_path):
+                product_path = os.path.join(folder_path, product_folder)
 
-                    product_info = {'price': 'Liên hệ', 'description': '...'}
-                    json_path = os.path.join(category_path, f"{os.path.splitext(filename)[0]}.json")
-                    if os.path.exists(json_path):
-                        with open(json_path, 'r', encoding='utf-8') as f:
-                            product_info.update(json.load(f))
+                if os.path.isdir(product_path):
+                    product_id = f"{folder_name}-{product_folder}" # Tạo ID duy nhất, ví dụ: "shoes-nike-air-force-1"
+                    product_name = product_folder.replace('-', ' ').replace('_', ' ').title()
                     
-                    product_list.append({
-                        'id': product_id,
-                        'name': product_name,
-                        'cover_image': os.path.join(category_folder, filename),
-                        **product_info
-                    })
-            
-            if product_list:
-                categorized_products[category_name] = product_list
+                    # --- Tìm thông tin chi tiết của sản phẩm ---
+                    product_info = {
+                        'price': 'Liên hệ',
+                        'description': f'Mô tả chi tiết cho sản phẩm {product_name}.'
+                    }
+                    info_path = os.path.join(product_path, 'info.json')
+                    if os.path.exists(info_path):
+                        try:
+                            with open(info_path, 'r', encoding='utf-8') as f:
+                                product_info.update(json.load(f))
+                        except Exception as e:
+                            print(f"LỖI: Không đọc được file info.json cho sản phẩm '{product_path}'. Lỗi: {e}")
 
-    # --- XỬ LÝ CÁC SẢN PHẨM LẺ TRONG STATIC -> GOM VÀO "LINH TINH" ---
-    miscellaneous_products = []
-    for filename in os.listdir(base_path):
-        # Chỉ xử lý nếu là file (không phải thư mục)
-        if os.path.isfile(os.path.join(base_path, filename)) and filename.lower().endswith(image_extensions):
-            product_id = os.path.splitext(filename)[0]
-            
-            if product_id.lower() in [name.lower() for name in files_to_ignore]:
-                continue
-            
-            product_name = product_id.replace('_', ' ').title()
-            
-            product_info = {'price': 'Liên hệ', 'description': '...'}
-            json_path = os.path.join(base_path, f"{product_id}.json")
-            if os.path.exists(json_path):
-                with open(json_path, 'r', encoding='utf-8') as f:
-                    product_info.update(json.load(f))
-            
-            miscellaneous_products.append({
-                'id': product_id,
-                'name': product_name,
-                'cover_image': filename,
-                **product_info
-            })
+                    # --- Tìm ảnh bìa ---
+                    # Ưu tiên file có tên là cover.jpg, cover.png...
+                    cover_image_path = None
+                    for file in os.listdir(product_path):
+                        if file.lower().startswith('cover.') and file.lower().endswith(('.jpg', '.png', '.jpeg', '.webp')):
+                            cover_image_path = os.path.join(folder_name, product_folder, file)
+                            break
+                    
+                    # Chỉ thêm sản phẩm nếu tìm thấy ảnh bìa
+                    if cover_image_path:
+                        product_list.append({
+                            'id': product_id,
+                            'name': product_name,
+                            'cover_image': cover_image_path,
+                            **product_info
+                        })
 
-    if miscellaneous_products:
-        categorized_products['Linh Tinh'] = miscellaneous_products
+        if product_list:
+            categorized_products[display_name] = product_list
 
     return categorized_products
 
-# Dùng một tên biến mới để rõ ràng hơn
-CATEGORIES = load_categorized_products()
+CATEGORIES = load_products_from_folders()
 
 @app.route('/')
 def home():
-    return render_template('index.html', categories=CATEGORIES)
+    # Sắp xếp các khu vực theo thứ tự bảng chữ cái để hiển thị ổn định
+    sorted_categories = dict(sorted(CATEGORIES.items()))
+    return render_template('index.html', categories=sorted_categories)
 
-# Route chi tiết sản phẩm cần điều chỉnh nhỏ để tìm kiếm sản phẩm trong các category
 @app.route('/product/<string:product_id>')
 def product(product_id):
     found_product = None
-    for category in CATEGORIES.values():
-        for p in category:
+    # Tìm sản phẩm trong tất cả các khu vực
+    for category_list in CATEGORIES.values():
+        for p in category_list:
             if p['id'] == product_id:
                 found_product = p
                 break
@@ -100,5 +97,5 @@ def product(product_id):
     if not found_product:
         abort(404)
         
-    # Trang products.html không cần thay đổi nhiều
+    # Bạn có thể muốn truyền thêm các ảnh chi tiết và video vào đây sau
     return render_template('products.html', product=found_product)
