@@ -1,15 +1,14 @@
 from flask import Flask, render_template
 
-app = Flask(name)
+app = Flask(__name__)
 
-@app.route("/")
+@app.route('/')
 def home():
-    # Lệnh này yêu cầu Flask tải file index.html từ thư mục 'templates'
-    return render_template("index.html")
+    return render_template('index.html')  # file bạn gửi là index.html
 
-@app.route("/product/<name>")
+@app.route('/product/<name>')
 def product(name):
-    return f"<h1>Thông tin sản phẩm: {name}</h1><p>Đây chỉ là mô phỏng!</p>"
+    return f"Chi tiết sản phẩm: {name}"
 
-if name == "main":
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(debug=True)
