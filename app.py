@@ -4,64 +4,40 @@ import json
 
 app = Flask(__name__)
 
-# ==============================================================================
-# BẢNG QUY ĐỔI TÊN KHU VỰC - BẠN SẼ CHỈNH SỬA Ở ĐÂY
-# ==============================================================================
-# Thêm các cặp "tên-thư-mục": "Tên Hiển Thị" mà bạn muốn.
-# Code sẽ chỉ quét những thư mục có tên được liệt kê ở đây.
-
+# TẠM THỜI CHỈ QUÉT "linh-tinh"
 CATEGORY_NAME_MAP = {
-    'shoes': 'Giày Dép Thời Trang',
     'linh-tinh': 'Sản Phẩm Linh Tinh',
-    # Ví dụ, khi bạn sẵn sàng, hãy thêm dòng sau:
-    # 'phu-kien': 'Phụ Kiện Da Cao Cấp'
 }
 
 def load_products_from_folders():
-    """
-    Quét các thư mục con trong 'static' được định nghĩa trong CATEGORY_NAME_MAP.
-    Mỗi thư mục con là một khu vực, và mỗi thư mục con bên trong nó là một sản phẩm.
-    """
     categorized_products = {}
     base_path = 'static'
 
-    # Lặp qua các thư mục được định nghĩa trong "bản đồ"
     for folder_name, display_name in CATEGORY_NAME_MAP.items():
         folder_path = os.path.join(base_path, folder_name)
         product_list = []
 
-        # Kiểm tra xem thư mục khu vực có tồn tại không
         if os.path.isdir(folder_path):
-            # Lặp qua các thư mục sản phẩm bên trong
             for product_folder in os.listdir(folder_path):
                 product_path = os.path.join(folder_path, product_folder)
 
                 if os.path.isdir(product_path):
-                    product_id = f"{folder_name}-{product_folder}" # Tạo ID duy nhất, ví dụ: "shoes-nike-air-force-1"
+                    product_id = f"{folder_name}-{product_folder}"
                     product_name = product_folder.replace('-', ' ').replace('_', ' ').title()
                     
-                    # --- Tìm thông tin chi tiết của sản phẩm ---
-                    product_info = {
-                        'price': 'Liên hệ',
-                        'description': f'Mô tả chi tiết cho sản phẩm {product_name}.'
-                    }
+                    product_info = { 'price': 'Liên hệ', 'description': '...' }
                     info_path = os.path.join(product_path, 'info.json')
                     if os.path.exists(info_path):
-                        try:
-                            with open(info_path, 'r', encoding='utf-8') as f:
-                                product_info.update(json.load(f))
-                        except Exception as e:
-                            print(f"LỖI: Không đọc được file info.json cho sản phẩm '{product_path}'. Lỗi: {e}")
+                        with open(info_path, 'r', encoding='utf-8') as f:
+                            product_info.update(json.load(f))
 
-                    # --- Tìm ảnh bìa ---
-                    # Ưu tiên file có tên là cover.jpg, cover.png...
+                    # Tìm file có tên bắt đầu bằng "cover."
                     cover_image_path = None
                     for file in os.listdir(product_path):
                         if file.lower().startswith('cover.') and file.lower().endswith(('.jpg', '.png', '.jpeg', '.webp')):
                             cover_image_path = os.path.join(folder_name, product_folder, file)
                             break
                     
-                    # Chỉ thêm sản phẩm nếu tìm thấy ảnh bìa
                     if cover_image_path:
                         product_list.append({
                             'id': product_id,
@@ -77,16 +53,15 @@ def load_products_from_folders():
 
 CATEGORIES = load_products_from_folders()
 
+# Các route không thay đổi
 @app.route('/')
 def home():
-    # Sắp xếp các khu vực theo thứ tự bảng chữ cái để hiển thị ổn định
     sorted_categories = dict(sorted(CATEGORIES.items()))
     return render_template('index.html', categories=sorted_categories)
 
 @app.route('/product/<string:product_id>')
 def product(product_id):
     found_product = None
-    # Tìm sản phẩm trong tất cả các khu vực
     for category_list in CATEGORIES.values():
         for p in category_list:
             if p['id'] == product_id:
@@ -94,9 +69,6 @@ def product(product_id):
                 break
         if found_product:
             break
-    
     if not found_product:
         abort(404)
-        
-    # Bạn có thể muốn truyền thêm các ảnh chi tiết và video vào đây sau
     return render_template('products.html', product=found_product)
