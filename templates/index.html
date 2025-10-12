@@ -5,174 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop Bán Hàng</title>
     <style>
-        /* CSS Reset cơ bản */
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f4f9;
-        }
-
-        /* --- CSS CHO MÀN HÌNH CHÀO MỪNG --- */
-        #welcome-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1000;
-            background: linear-gradient(135deg, #007bff, #00c3ff);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease-out;
-            text-align: center;
-        }
-
-        #welcome-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #welcome-overlay img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            object-fit: cover;
-        }
-
-        #welcome-overlay h1 {
-            font-size: 3.2em; 
-            margin: 0 0 15px 0;
-        }
-
-        #welcome-overlay p {
-            font-size: 1.5em;
-            margin: 0 0 40px 0;
-            opacity: 0.9;
-        }
-
-        #welcome-overlay button {
-            background-color: white;
-            color: #007bff;
-            border: none;
-            border-radius: 50px;
-            padding: 14px 40px;
-            font-size: 1.4em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-        }
-
-        #welcome-overlay button:hover {
-            transform: scale(1.05);
-            background-color: #f0f0f0;
-        }
-
-        /* --- CSS CHO NỘI DUNG CHÍNH CỦA TRANG --- */
-        #main-content {
-            display: none;
-            padding: 40px;
-            text-align: center;
-        }
-
-        /* --- CSS CHO NÚT BẬT/TẮT NHẠC --- */
-        #music-toggle-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 999;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50px;
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-
-        #music-toggle-button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-            transform: scale(1.05);
-        }
-        
-        /* --- CSS CHO SẢN PHẨM --- */
-         .category-section {
-            margin-top: 40px;
-            padding: 20px;
-            border-top: 2px solid #eee;
-        }
-        .category-title {
-            font-size: 2.2em;
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .product-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .item { 
-            margin: 20px; 
-            border: 1px solid #ddd; 
-            border-radius: 10px; 
-            display: inline-block; 
-            background: white; 
-            width: 250px; 
-            overflow: hidden; 
-            text-align: left; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-            transition: transform 0.2s ease-in-out; 
-        }
-        .item:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
-        }
-        .image-box { 
-            width: 100%; 
-            height: 250px; 
-            overflow: hidden; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            background-color: #eee; 
-            border-bottom: 1px solid #eee; 
-        }
-        .product-image { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-        }
-        .detail-box { 
-            padding: 10px 15px; 
-        }
-        .info-row { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 5px; 
-        }
-        .info-row h2 { 
-            margin: 0; 
-            font-size: 1.1em; 
-        }
-        .product-price { 
-            margin: 0; 
-            color: #555; 
-            font-weight: bold; 
-            font-size: 1.1em; 
-        }
-        h2 a { 
-            text-decoration: none; 
-            color: #007bff; 
-        }
+        /* Toàn bộ CSS của bạn giữ nguyên như cũ */
+        body, html { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f9; }
+        #welcome-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1000; background: linear-gradient(135deg, #007bff, #00c3ff); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease-out; text-align: center; }
+        #welcome-overlay.hidden { opacity: 0; pointer-events: none; }
+        #welcome-overlay img { width: 120px; height: 120px; border-radius: 50%; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); object-fit: cover; }
+        #welcome-overlay h1 { font-size: 3.2em; margin: 0 0 15px 0; }
+        #welcome-overlay p { font-size: 1.5em; margin: 0 0 40px 0; opacity: 0.9; }
+        #welcome-overlay button { background-color: white; color: #007bff; border: none; border-radius: 50px; padding: 14px 40px; font-size: 1.4em; font-weight: bold; cursor: pointer; transition: transform 0.2s, background-color 0.2s; }
+        #welcome-overlay button:hover { transform: scale(1.05); background-color: #f0f0f0; }
+        #main-content { display: none; padding: 40px; text-align: center; }
+        #music-toggle-button { position: fixed; bottom: 20px; right: 20px; z-index: 999; background-color: rgba(0, 0, 0, 0.5); color: white; border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 50px; padding: 10px 20px; font-size: 1em; cursor: pointer; transition: background-color 0.3s, transform 0.2s; }
+        #music-toggle-button:hover { background-color: rgba(0, 0, 0, 0.8); transform: scale(1.05); }
+        .category-section { margin-top: 40px; padding: 20px; border-top: 2px solid #eee; }
+        .category-title { font-size: 2.2em; color: #333; margin-bottom: 20px; text-align: center; }
+        .product-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .item { margin: 20px; border: 1px solid #ddd; border-radius: 10px; display: inline-block; background: white; width: 250px; overflow: hidden; text-align: left; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s ease-in-out; }
+        .item:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
+        .image-box { width: 100%; height: 250px; overflow: hidden; display: flex; justify-content: center; align-items: center; background-color: #eee; border-bottom: 1px solid #eee; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; }
+        .detail-box { padding: 10px 15px; }
+        .info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .info-row h2 { margin: 0; font-size: 1.1em; }
+        .product-price { margin: 0; color: #555; font-weight: bold; font-size: 1.1em; }
+        h2 a { text-decoration: none; color: #007bff; }
     </style>
 </head>
 <body>
@@ -187,36 +43,26 @@
     <main id="main-content">
         <h1>Trang chủ Shop Bán Hàng</h1>
 
+        {% for category_name, products_in_category in categories.items() %}
         <div class="category-section">
-            <h2 class="category-title">Sản Phẩm Linh Tinh</h2>
+            <h2 class="category-title">{{ category_name }}</h2>
             <div class="product-container">
-
+                {% for product in products_in_category %}
                 <div class="item">
                     <div class="image-box">
-                        <img src="{{ url_for('static', filename='linh-tinh/ao-thun/cover.jpg') }}" alt="Hình Áo Thun" class="product-image">
+                        <img src="{{ url_for('static', filename=product.cover_image) }}" alt="Hình {{ product.name }}" class="product-image">
                     </div>
                     <div class="detail-box">
                         <div class="info-row">
-                            <h2><a href="{{ url_for('product', product_id='linh-tinh-ao-thun') }}">Áo Thun</a></h2>
-                            <p class="product-price">150.000đ</p>
+                            <h2><a href="{{ url_for('product', product_id=product.id) }}">{{ product.name }}</a></h2>
+                            <p class="product-price">{{ product.price }}</p>
                         </div>
                     </div>
                 </div>
-
-                <div class="item">
-                    <div class="image-box">
-                        <img src="{{ url_for('static', filename='linh-tinh/quan-jean/cover.png') }}" alt="Hình Quần Jean" class="product-image">
-                    </div>
-                    <div class="detail-box">
-                        <div class="info-row">
-                            <h2><a href="{{ url_for('product', product_id='linh-tinh-quan-jean') }}">Quần Jean</a></h2>
-                            <p class="product-price">250.000đ</p>
-                        </div>
-                    </div>
-                </div>
-
+                {% endfor %}
             </div>
         </div>
+        {% endfor %}
     </main>
 
     <button id="music-toggle-button" style="display: none;">Tắt nhạc</button>
