@@ -32,17 +32,14 @@
     </style>
 </head>
 <body>
-
     <div id="welcome-overlay">
         <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Shop">
         <h1>Xin chào Quý khách!</h1>
         <p>Chào mừng bạn đến với Shop Bán Hàng</p>
         <button id="enter-button">Xác nhận để tiếp tục</button>
     </div>
-
     <main id="main-content">
         <h1>Trang chủ Shop Bán Hàng</h1>
-
         {% for category_name, products_in_category in categories.items() %}
         <div class="category-section">
             <h2 class="category-title">{{ category_name }}</h2>
@@ -64,48 +61,28 @@
         </div>
         {% endfor %}
     </main>
-
     <button id="music-toggle-button" style="display: none;">Tắt nhạc</button>
-
     <audio id="background-music" loop>
         <source src="{{ url_for('static', filename='background_music.mp3') }}" type="audio/mpeg">
         Trình duyệt của bạn không hỗ trợ phát nhạc.
     </audio>
-    
     <script>
         const welcomeOverlay = document.getElementById('welcome-overlay');
         const enterButton = document.getElementById('enter-button');
         const mainContent = document.getElementById('main-content');
         const backgroundMusic = document.getElementById('background-music');
         const musicToggleButton = document.getElementById('music-toggle-button');
-
         let isMusicPlaying = false;
-
         enterButton.addEventListener('click', () => {
-            backgroundMusic.play().then(() => {
-                isMusicPlaying = true;
-            }).catch(error => {
-                console.log("Trình duyệt đã chặn tự động phát nhạc:", error);
-                isMusicPlaying = false;
-                musicToggleButton.textContent = 'Bật nhạc';
-            });
-
+            backgroundMusic.play().then(() => { isMusicPlaying = true; }).catch(error => { console.log("Lỗi phát nhạc:", error); isMusicPlaying = false; musicToggleButton.textContent = 'Bật nhạc'; });
             welcomeOverlay.classList.add('hidden');
             mainContent.style.display = 'block';
             musicToggleButton.style.display = 'block';
         });
-
         musicToggleButton.addEventListener('click', () => {
-            if (isMusicPlaying) {
-                backgroundMusic.pause();
-                musicToggleButton.textContent = 'Bật nhạc';
-            } else {
-                backgroundMusic.play();
-                musicToggleButton.textContent = 'Tắt nhạc';
-            }
+            if (isMusicPlaying) { backgroundMusic.pause(); musicToggleButton.textContent = 'Bật nhạc'; } else { backgroundMusic.play(); musicToggleButton.textContent = 'Tắt nhạc'; }
             isMusicPlaying = !isMusicPlaying;
         });
     </script>
-
 </body>
 </html>
