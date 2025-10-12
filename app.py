@@ -1,37 +1,75 @@
 from flask import Flask, render_template, abort
+import os
+import json
 
 app = Flask(__name__)
 
-# Dữ liệu này bây giờ CHỈ dùng cho trang chi tiết sản phẩm
-CATEGORIES = {
-    'Sản Phẩm Linh Tinh': [
-        {
-            'id': 'linh-tinh-ao-thun',
-            'name': 'Áo Thun',
-            'cover_image': 'linh-tinh/ao-thun/cover.jpg',
-            'price': '150.000đ',
-            'description': 'Mô tả chi tiết cho áo thun.'
-            # Bạn có thể thêm các ảnh chi tiết và video vào đây nếu muốn
-        },
-        {
-            'id': 'linh-tinh-quan-jean',
-            'name': 'Quần Jean',
-            'cover_image': 'linh-tinh/quan-jean/cover.png',
-            'price': '250.000đ',
-            'description': 'Mô tả chi tiết cho quần jean.'
-        }
-    ]
+# BẢNG QUY ĐỔI TÊN KHU VỰC - CODE SẼ CHỈ QUÉT NHỮNG THƯ MỤC NÀY
+CATEGORY_NAME_MAP = {
+    'linh-tinh': 'Sản Phẩm Linh Tinh',
+    'shoes': 'Giày Dép Thời Trang'
 }
+
+def load_products_from_folders():
+    categorized_products = {}
+    base_path = 'static'
+
+    # Lặp qua các thư mục được định nghĩa trong "bản đồ"
+    for folder_name, display_name in CATEGORY_NAME_MAP.items():
+        folder_path = os.path.join(base_path, folder_name)
+        product_list = []
+
+        # Kiểm tra xem thư mục khu vực có tồn tại không
+        if os.path.isdir(folder_path):
+            # Lặp qua các thư mục sản phẩm bên trong
+            for product_folder in os.listdir(folder_path):
+                product_path = os.path.join(folder_path, product_folder)
+
+                if os.path.isdir(product_path):
+                    product_id = f"{folder_name}-{product_folder}" # Tạo ID duy nhất
+                    product_name = product_folder.replace('-', ' ').replace('_', ' ').title()
+                    
+                    product_info = {
+                        'price': 'Liên hệ',
+                        'description': f'Mô tả chi tiết cho sản phẩm {product_name}.'
+                    }
+                    info_path = os.path.join(product_path, 'info.json')
+                    if os.path.exists(info_path):
+                        try:
+                            with open(info_path, 'r', encoding='utf-8') as f:
+                                product_info.update(json.load(f))
+                        except json.JSONDecodeError:
+                            print(f"LỖI CÚ PHÁP: File {info_path} bị lỗi.")
+                            continue
+
+                    cover_image_path = None
+                    for file in os.listdir(product_path):
+                        if file.lower().startswith('cover.') and file.lower().endswith(('.jpg', '.png', '.jpeg', '.webp')):
+                            cover_image_path = os.path.join(folder_name, product_folder, file)
+                            break
+                    
+                    if cover_image_path:
+                        product_list.append({
+                            'id': product_id,
+                            'name': product_name,
+                            'cover_image': cover_image_path,
+                            **product_info
+                        })
+
+        if product_list:
+            categorized_products[display_name] = product_list
+
+    return categorized_products
+
+CATEGORIES = load_products_from_folders()
 
 @app.route('/')
 def home():
-    # Trang chủ bây giờ không cần dữ liệu từ app.py nữa
-    return render_template('index.html')
+    return render_template('index.html', categories=CATEGORIES)
 
 @app.route('/product/<string:product_id>')
 def product(product_id):
     found_product = None
-    # Vẫn tìm sản phẩm trong dữ liệu để hiển thị trang chi tiết
     for category_list in CATEGORIES.values():
         for p in category_list:
             if p['id'] == product_id:
@@ -43,5 +81,4 @@ def product(product_id):
     if not found_product:
         abort(404)
         
-    # File products.html sẽ cần được tạo để hiển thị chi tiết sản phẩm
     return render_template('products.html', product=found_product)
