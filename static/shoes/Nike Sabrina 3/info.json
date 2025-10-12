@@ -1,1 +1,22 @@
-
+{
+  "price": "3.500.000đ",
+  "description": "Mô tả chi tiết cho giày Nike Ja 3. Phù hợp cho chơi bóng rổ.",
+  "variants": [
+    {
+      "color": "Trắng",
+      "image": "trắng.jpg"
+    },
+    {
+      "color": "Hồng",
+      "image": "hồng.jpg"
+    },
+    {
+      "color": "Xám",
+      "image": "xám.jpg"
+    },
+    {
+      "color": "Cọc Cạch",
+      "image": "cọc cạch.jpg"
+    }
+  ]
+}
