@@ -1,0 +1,10 @@
+{
+  "price": "99.000.000đ",
+  "description": "Nhân vật lucy Lucy",
+  "variants": [
+    {
+      "color": "Phiên bản tiêu chuẩn",
+      "image": "lucy.png"
+    }
+  ]
+}
