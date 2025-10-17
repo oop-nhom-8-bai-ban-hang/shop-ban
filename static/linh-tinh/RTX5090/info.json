@@ -1,10 +1,10 @@
 {
   "price": "59.990.000đ",
-  "description": "Card đồ họa NVIDIA GeForce RTX 5090 thế hệ mới, mang lại hiệu năng đỉnh cao cho gaming 8K và các tác vụ AI chuyên nghiệp.",
+  "description": "Card đồ họa NVIDIA GeForce RTX 5090 thế hệ mới",
   "variants": [
     {
       "color": "Founders Edition",
-      "image": "rtx5090.png"
+      "image": "rtx5090.jpg"
     }
   ]
 }
