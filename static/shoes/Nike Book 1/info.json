@@ -1,22 +1,18 @@
 {
   "price": "3.500.000đ",
-  "description": "Mô tả chi tiết cho giày Nike Ja 3. Phù hợp cho chơi bóng rổ.",
+  "description": "Mô tả chi tiết cho giày Nike Book 1.",
   "variants": [
     {
       "color": "Trắng",
       "image": "trắng.jpg"
     },
     {
-      "color": "Hồng",
-      "image": "hồng.jpg"
+      "color": "Xanh",
+      "image": "xanh.jpg"
     },
     {
-      "color": "Xám",
-      "image": "xám.jpg"
-    },
-    {
-      "color": "Cọc Cạch",
-      "image": "cọc cạch.jpg"
+      "color": "Đen",
+      "image": "đen.jpg"
     }
   ]
 }
