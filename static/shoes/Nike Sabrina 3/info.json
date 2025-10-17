@@ -7,16 +7,12 @@
       "image": "trắng.jpg"
     },
     {
-      "color": "Hồng",
-      "image": "hồng.jpg"
+      "color": "Xanh",
+      "image": "xanh.jpg"
     },
     {
-      "color": "Xám",
-      "image": "xám.jpg"
-    },
-    {
-      "color": "Cọc Cạch",
-      "image": "cọc cạch.jpg"
+      "color": "Đỏ",
+      "image": "đỏ.jpg"
     }
   ]
 }
