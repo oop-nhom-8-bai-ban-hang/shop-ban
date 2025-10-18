@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Giỏ hàng của bạn</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f8f9fa; padding: 20px; }
+        .container { max-width: 960px; margin: auto; background: white; padding: 30px; border-radius: 8px; }
+        .cart-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+        .cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; margin-right: 15px; }
+        .item-info { flex-grow: 1; }
+        .cart-total { text-align: right; font-size: 1.5em; font-weight: bold; margin-top: 30px; }
+        .checkout-button { display: block; width: 100%; padding: 15px; background: #28a745; color: white; text-align: center; text-decoration: none; border-radius: 5px; font-size: 1.2em; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Giỏ hàng của bạn</h1>
+        {% if cart_items %}
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <img src="{{ url_for('static', filename=item.cover_image) }}" alt="{{ item.name }}">
+                <div class="item-info">
+                    <h3>{{ item.name }}</h3>
+                    <p>Giá: {{ item.price }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="cart-total">
+                Tổng cộng: {{ "{:,}đ".format(total_price) }}
+            </div>
+
+            <form action="{{ url_for('checkout') }}" method="POST">
+                <button type="submit" class="checkout-button">Tiến hành đặt hàng</button>
+            </form>
+        {% else %}
+            <p>Giỏ hàng của bạn đang trống.</p>
+        {% endif %}
+        <a href="/" style="display: inline-block; margin-top: 20px;">← Tiếp tục mua sắm</a>
+    </div>
+</body>
+</html>
