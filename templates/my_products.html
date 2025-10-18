@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Sản phẩm của tôi</title></head>
+<body>
+    <h1>Sản phẩm của tôi</h1>
+    <a href="{{ url_for('add_product') }}">Đăng sản phẩm mới</a>
+    <hr>
+    {% for product in products %}
+    <div>
+        <img src="{{ url_for('static', filename='product_images/' + product.image_file) }}" width="100">
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.price }}</p>
+        <form action="{{ url_for('delete_product', product_id=product.id) }}" method="POST">
+            <button type="submit">Xóa</button>
+        </form>
+    </div>
+    <hr>
+    {% endfor %}
+</body>
+</html>
