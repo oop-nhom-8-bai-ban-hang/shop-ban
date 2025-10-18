@@ -1,69 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Bán Hàng</title>
-    <style>
-        /* CSS Reset cơ bản */
-        body, html { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f9; }
-
-        /* CSS Mới cho thanh điều hướng */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: white;
-            padding: 10px 40px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            z-index: 100;
-            box-sizing: border-box;
-        }
-        .nav-links { display: flex; align-items: center; gap: 20px; }
-        .nav-links a { text-decoration: none; color: #007bff; font-weight: bold; }
-        .nav-links span { color: #555; font-weight: bold; }
-
-        /* CSS Màn hình chào */
-        #welcome-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1000; background: linear-gradient(135deg, #007bff, #00c3ff); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease-out; text-align: center; }
-        #welcome-overlay.hidden { opacity: 0; pointer-events: none; }
-        #welcome-overlay img { width: 120px; height: 120px; border-radius: 50%; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); object-fit: cover; }
-        #welcome-overlay h1 { font-size: 3.2em; margin: 0 0 15px 0; }
-        #welcome-overlay p { font-size: 1.5em; margin: 0 0 40px 0; opacity: 0.9; }
-        #welcome-overlay button { background-color: white; color: #007bff; border: none; border-radius: 50px; padding: 14px 40px; font-size: 1.4em; font-weight: bold; cursor: pointer; transition: transform 0.2s, background-color 0.2s; }
-        #welcome-overlay button:hover { transform: scale(1.05); background-color: #f0f0f0; }
-        
-        /* CSS Nội dung chính & Sản phẩm */
-        #main-content { display: none; padding: 40px; text-align: center; margin-top: 60px; /* Thêm margin-top để không bị che bởi navbar */ }
-        .category-section { margin-top: 40px; padding: 20px; border-top: 2px solid #eee; }
-        .category-title { font-size: 2.2em; color: #333; margin-bottom: 20px; text-align: center; }
-        .product-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-        .item { margin: 20px; border: 1px solid #ddd; border-radius: 10px; display: inline-block; background: white; width: 250px; overflow: hidden; text-align: left; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s ease-in-out; }
-        .item:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
-        .image-box { width: 100%; height: 250px; overflow: hidden; display: flex; justify-content: center; align-items: center; background-color: #eee; border-bottom: 1px solid #eee; }
-        .product-image { width: 100%; height: 100%; object-fit: cover; }
-        .detail-box { padding: 10px 15px; }
-        .info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .info-row h2 { margin: 0; font-size: 1.1em; }
-        .product-price { margin: 0; color: #555; font-weight: bold; font-size: 1.1em; }
-        h2 a { text-decoration: none; color: #007bff; }
-        
-        /* CSS Nút nhạc */
-        #music-toggle-button { position: fixed; bottom: 20px; right: 20px; z-index: 999; background-color: rgba(0, 0, 0, 0.5); color: white; border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 50px; padding: 10px 20px; font-size: 1em; cursor: pointer; transition: background-color 0.3s, transform 0.2s; }
-        #music-toggle-button:hover { background-color: rgba(0, 0, 0, 0.8); transform: scale(1.05); }
-
-    </style>
-</head>
+    </head>
 <body>
-
     <div class="navbar">
         <div class="nav-links">
             <a href="{{ url_for('cart') }}">Giỏ hàng</a>
             {% if current_user.is_authenticated %}
                 <span>Chào, {{ current_user.username }}!</span>
+                <a href="{{ url_for('my_products') }}">Sản phẩm của tôi</a>
                 {% if current_user.is_admin %}
                     <a href="{{ url_for('admin_dashboard') }}">Trang Admin</a>
                 {% endif %}
@@ -74,34 +19,16 @@
             {% endif %}
         </div>
     </div>
-
-    <div id="welcome-overlay">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Shop">
-        <h1>Xin chào Quý khách!</h1>
-        <p>Chào mừng bạn đến với Shop Bán Hàng</p>
-        <button id="enter-button">Xác nhận để tiếp tục</button>
-    </div>
-
     <main id="main-content">
         <h1>Trang chủ Shop Bán Hàng</h1>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div style="padding: 15px; margin-bottom: 20px; border-radius: 5px; background-color: {{ '#d4edda' if category == 'success' else '#f8d7da' }}; color: {{ '#155724' if category == 'success' else '#721c24' }};">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-
-        {% for category_name, products_in_category in categories.items() %}
+        {% for category in categories %}
         <div class="category-section">
-            <h2 class="category-title">{{ category_name }}</h2>
+            <h2 class="category-title">{{ category.name }}</h2>
             <div class="product-container">
-                {% for product in products_in_category %}
+                {% for product in category.products %}
                 <div class="item">
                     <div class="image-box">
-                        <img src="{{ url_for('static', filename=product.cover_image) }}" alt="Hình {{ product.name }}" class="product-image">
+                        <img src="{{ url_for('static', filename='product_images/' + product.image_file) }}" alt="Hình {{ product.name }}" class="product-image">
                     </div>
                     <div class="detail-box">
                         <div class="info-row">
@@ -115,32 +42,5 @@
         </div>
         {% endfor %}
     </main>
-
-    <button id="music-toggle-button" style="display: none;">Tắt nhạc</button>
-
-    <audio id="background-music" loop>
-        <source src="{{ url_for('static', filename='background_music.mp3') }}" type="audio/mpeg">
-        Trình duyệt của bạn không hỗ trợ phát nhạc.
-    </audio>
-    
-    <script>
-        const welcomeOverlay = document.getElementById('welcome-overlay');
-        const enterButton = document.getElementById('enter-button');
-        const mainContent = document.getElementById('main-content');
-        const backgroundMusic = document.getElementById('background-music');
-        const musicToggleButton = document.getElementById('music-toggle-button');
-        let isMusicPlaying = false;
-        enterButton.addEventListener('click', () => {
-            backgroundMusic.play().then(() => { isMusicPlaying = true; }).catch(error => { console.log("Lỗi phát nhạc:", error); isMusicPlaying = false; musicToggleButton.textContent = 'Bật nhạc'; });
-            welcomeOverlay.classList.add('hidden');
-            mainContent.style.display = 'block';
-            musicToggleButton.style.display = 'block';
-        });
-        musicToggleButton.addEventListener('click', () => {
-            if (isMusicPlaying) { backgroundMusic.pause(); musicToggleButton.textContent = 'Bật nhạc'; } else { backgroundMusic.play(); musicToggleButton.textContent = 'Tắt nhạc'; }
-            isMusicPlaying = !isMusicPlaying;
-        });
-    </script>
-
-</body>
+    </body>
 </html>
