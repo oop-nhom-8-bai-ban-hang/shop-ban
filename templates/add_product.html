@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm sản phẩm mới</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f8f9fa; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea { resize: vertical; min-height: 100px; }
+        button { background-color: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1.1em; }
+        a { color: #007bff; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thêm sản phẩm mới</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="category">Chọn khu vực:</label>
+                <select id="category" name="category" required>
+                    <option value="shoes">Giày Dép Thời Trang</option>
+                    <option value="linh-tinh">Sản Phẩm Linh Tinh</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="product_name_slug">Tên sản phẩm (viết liền, không dấu, dùng gạch nối):</label>
+                <input type="text" id="product_name_slug" name="product_name_slug" placeholder="Ví dụ: nike-air-force-1" required>
+            </div>
+            <div class="form-group">
+                <label for="product_name_display">Tên hiển thị sản phẩm:</label>
+                <input type="text" id="product_name_display" name="product_name_display" placeholder="Ví dụ: Nike Air Force 1" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Giá:</label>
+                <input type="text" id="price" name="price" placeholder="Ví dụ: 2.500.000đ" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Mô tả:</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="images">Chọn các ảnh cho sản phẩm:</label>
+                <input type="file" id="images" name="images" multiple>
+            </div>
+            <button type="submit">Thêm sản phẩm</button>
+        </form>
+        <p><a href="{{ url_for('admin_dashboard') }}">← Quay lại Dashboard</a></p>
+    </div>
+</body>
+</html>
