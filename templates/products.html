@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <title>{{ product.name }}</title>
     </head>
 <body>
     <div class="container">
-        <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST" style="margin-top: 30px;">
+        <h1>{{ product.name }}</h1>
+        <p>Đăng bởi: {{ product.seller.username }}</p>
+        <img src="{{ url_for('static', filename='product_images/' + product.image_file) }}" alt="{{ product.name }}" style="max-width: 400px; border-radius: 8px;">
+        <p class="description">{{ product.description }}</p>
+        <p class="price">{{ product.price }}</p>
+        <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
             <button type="submit" class="buy-button">Thêm vào giỏ hàng</button>
         </form>
-
         <a href="/" class="back-link">← Quay lại trang chính</a>
     </div>
 </body>
