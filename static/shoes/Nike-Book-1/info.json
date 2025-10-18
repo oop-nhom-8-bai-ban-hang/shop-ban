@@ -1,0 +1,10 @@
+{
+  "price": "3.500.000đ",
+  "description": "Mô tả chi tiết cho giày Nike-Book-1.",
+  "variants": [
+    {
+      "color": "Trắng",
+      "image": "trang.jpg"
+    }
+  ]
+}
