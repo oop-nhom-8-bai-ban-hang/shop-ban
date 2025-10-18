@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý đơn hàng</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f8f9fa; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Danh sách đơn hàng</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Đơn hàng</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày đặt</th>
+                    <th>Sản phẩm</th>
+                    <th>Tổng tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.customer.username }}</td>
+                    <td>{{ order.date_placed.strftime('%d-%m-%Y %H:%M') }}</td>
+                    <td>
+                        <ul>
+                        {% for item in order.items | fromjson %}
+                            <li>{{ item.name }} ({{ item.price }})</li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ order.total_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('admin_dashboard') }}" style="display: inline-block; margin-top: 20px;">← Quay lại Dashboard</a>
+    </div>
+</body>
+</html>
