@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    </head>
+<body>
+    <div class="container">
+        <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST" style="margin-top: 30px;">
+            <button type="submit" class="buy-button">Thêm vào giỏ hàng</button>
+        </form>
+
+        <a href="/" class="back-link">← Quay lại trang chính</a>
+    </div>
+</body>
+</html>
