@@ -20,6 +20,12 @@
         </div>
     </div>
     <main id="main-content">
+        <div class="search-bar" style="text-align: center; margin: 20px 0;">
+            <form method="GET" action="{{ url_for('search') }}">
+                <input type="text" name="query" placeholder="Tìm kiếm sản phẩm..." style="width: 300px; padding: 10px;">
+                <button type="submit" style="padding: 10px;">Tìm</button>
+            </form>
+        </div>
         <h1>Trang chủ Shop Bán Hàng</h1>
         {% for category in categories %}
         <div class="category-section">
