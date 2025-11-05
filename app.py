@@ -76,6 +76,20 @@ def home():
 def product(product_id):
     prod = Product.query.get_or_404(product_id)
     return render_template('products.html', product=prod)
+# BẮT ĐẦU CODE HÀM TÌM KIẾM
+@app.route('/search')
+def search():
+    query = request.args.get('query') # Lấy từ khóa 'query' từ URL
+    if not query:
+        return redirect(url_for('home')) # Nếu không gõ gì thì quay về trang chủ
+    
+    # Tìm tất cả sản phẩm có tên chứa từ khóa (không phân biệt hoa/thường)
+    search_term = f"%{query}%"
+    results = Product.query.filter(Product.name.ilike(search_term)).all()
+    
+    # Gửi kết quả sang một trang HTML mới
+    return render_template('search_results.html', products=results, query=query)
+# KẾT THÚC CODE HÀM TÌM KIẾM
 
 # --- CHỨC NĂNG TÀI KHOẢN (Giữ nguyên) ---
 @app.route("/register", methods=['GET', 'POST'])
