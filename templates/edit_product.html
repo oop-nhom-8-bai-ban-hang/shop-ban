@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Sửa thông tin sản phẩm</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Sửa thông tin sản phẩm</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Tên sản phẩm:</label>
+                <input type="text" id="name" name="name" required value="{{ product.name }}">
+            </div>
+            <div class="form-group">
+                <label for="price">Giá:</label>
+                <input type="text" id="price" name="price" required value="{{ product.price }}">
+            </div>
+            <div class="form-group">
+                <label for="description">Mô tả:</label>
+                <textarea id="description" name="description" required>{{ product.description }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="category">Chọn danh mục:</label>
+                <select id="category" name="category" required>
+                    {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if cat.id == product.category_id %}selected{% endif %}>
+                        {{ cat.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="image">Ảnh sản phẩm:</label>
+                <p>Ảnh hiện tại:</p>
+                <img src="{{ url_for('static', filename='product_images/' + product.image_file) }}" width="100">
+                <p>Tải ảnh mới để thay thế (để trống nếu không muốn đổi):</p>
+                <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/jpg">
+            </div>
+            <button type="submit">Cập nhật sản phẩm</button>
+        </form>
+    </div>
+</body>
+</html>
