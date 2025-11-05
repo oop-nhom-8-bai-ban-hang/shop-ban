@@ -163,6 +163,46 @@ def add_product():
         return redirect(url_for('my_products'))
     return render_template('add_product.html', categories=categories)
 
+# BẮT ĐẦU CODE CHỨC NĂNG SỬA SẢN PHẨM
+@app.route('/edit_product/<int:product_id>', methods=['GET', 'POST'])
+@login_required
+def edit_product(product_id):
+    prod = Product.query.get_or_404(product_id)
+    # Rất quan trọng: Kiểm tra đúng là chủ sản phẩm mới được sửa
+    if prod.seller != current_user:
+        abort(403) 
+    
+    categories = Category.query.all()
+
+    if request.method == 'POST':
+        # 1. Lấy dữ liệu từ form và cập nhật vào 'prod'
+        prod.name = request.form.get('name')
+        prod.price = request.form.get('price')
+        prod.description = request.form.get('description')
+        prod.category_id = request.form.get('category')
+        
+        # 2. Kiểm tra xem có file ảnh mới được tải lên không
+        if 'image' in request.files and request.files['image'].filename != '':
+            # Xóa file ảnh cũ (nếu không phải default.jpg)
+            if prod.image_file != 'default.jpg':
+                try:
+                    os.remove(os.path.join(app.root_path, app.config['UPLOAD_FOLDER'], prod.image_file))
+                except OSError:
+                    pass # Bỏ qua nếu file không tồn tại
+            
+            # Lưu file ảnh mới (dùng lại hàm save_picture đã có)
+            prod.image_file = save_picture(request.files['image'])
+        
+        # 3. Lưu tất cả thay đổi vào database
+        db.session.commit() 
+        flash('Sản phẩm đã được cập nhật!', 'success')
+        return redirect(url_for('my_products'))
+    
+    # Nếu là request GET (lần đầu vào trang Sửa)
+    # Hiển thị form và điền sẵn thông tin cũ
+    return render_template('edit_product.html', product=prod, categories=categories)
+# KẾT THÚC CODE CHỨC NĂNG SỬA SẢN PHẨM
+
 @app.route('/delete_product/<int:product_id>', methods=['POST'])
 @login_required
 def delete_product(product_id):
